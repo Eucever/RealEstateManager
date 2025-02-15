@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "45660265671",
+    "project_id": "realestatemanager-6684a",
+    "storage_bucket": "realestatemanager-6684a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45660265671:android:f5edcdf1fd1d3daf66f2e2",
+        "android_client_info": {
+          "package_name": "com.example.realestatemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU4maANHA-Aq-kOYBZnthbTDRiAmNI5qE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
