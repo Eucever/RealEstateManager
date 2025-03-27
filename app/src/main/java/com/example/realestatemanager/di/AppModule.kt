@@ -1,6 +1,7 @@
 package com.example.realestatemanager.di
 
 import android.content.Context
+import com.example.realestatemanager.AppSingleton
 import com.example.realestatemanager.data.dao.AgentDAO
 import com.example.realestatemanager.data.dao.CommodityDAO
 import com.example.realestatemanager.data.dao.CommodityPropertyCrossRefDAO
@@ -12,6 +13,7 @@ import com.example.realestatemanager.data.repository.AgentRepository
 import com.example.realestatemanager.data.repository.CommodityRepository
 import com.example.realestatemanager.data.repository.EasyPropertyRepository
 import com.example.realestatemanager.data.repository.EstateTypeRepository
+import com.example.realestatemanager.data.repository.GPSRepository
 import com.example.realestatemanager.data.repository.PropertyRepository
 import com.example.realestatemanager.domain.usecase.agent.GetAllAgentsUseCase
 import com.example.realestatemanager.domain.usecase.commodity.GetAllCommoditiesUseCase
@@ -25,6 +27,8 @@ import com.example.realestatemanager.ui.form.converter.ListConverter
 import com.example.realestatemanager.ui.form.formater.DateFormater
 import com.example.realestatemanager.ui.form.formater.FormFormater
 import com.example.realestatemanager.ui.form.validator.FormValidator
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -128,5 +132,8 @@ class AppModule {
 
     @Provides
     fun provideListConvert()= ListConverter()
+
+    @Provides
+    fun provideGPSRepository()= GPSRepository()
 
 }

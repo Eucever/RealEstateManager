@@ -1,3 +1,9 @@
+import java.util.Properties
+
+val keystoreFile = project.rootProject.file("apikeys.properties")
+val properties = Properties()
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +12,7 @@ plugins {
     id("com.google.gms.google-services")
 }
 android {
+
     namespace = "com.example.realestatemanager"
     compileSdk = 35
 
@@ -18,6 +25,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        properties.load(keystoreFile.inputStream())
+
+
+        val mapsKey = properties.getProperty("MAPS_KEY_NAME") ?: ""
+
+        manifestPlaceholders["GOOGLE_KEY"] = mapsKey
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -58,6 +71,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.runtime.livedata)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -85,8 +99,6 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
 
-
-
     // Java 8 Time
     implementation(libs.jakewharton.threetenabp)
 
@@ -101,9 +113,18 @@ dependencies {
 
     androidTestImplementation(libs.hilt.android.testing)
 
+    // Google Maps SDK for Android
+    implementation(libs.places)
+    implementation(libs.play.services.maps)
+
+// Google maps Compose
+    implementation(libs.maps.compose)
+
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
 
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.kotlinx.coroutines.core)
+
+
 }
