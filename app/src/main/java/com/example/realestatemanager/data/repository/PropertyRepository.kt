@@ -63,10 +63,6 @@ class PropertyRepository @Inject constructor(private val propertyDAO : PropertyD
                        dateSaleStart : Instant?,
                        dateSaleEnd: Instant?):List<Property> {
 
-        //val dateSaleStart = Instant.now().toEpochMilli()-(3600L*24L*30L*3L*1000L)
-        //val dateSaleEnd  = Instant.now().toEpochMilli()
-        //Log.d("PROPREPO", "Date start : $dateSaleStart")
-        //Log.d("PROPREPO", "Date end : $dateSaleEnd")
         return propertyDAO.search(type,
             minPrice,
             maxPrice,
@@ -88,100 +84,5 @@ class PropertyRepository @Inject constructor(private val propertyDAO : PropertyD
             }
             .map { it.toModel() }
     }
-
-    /*@WorkerThread
-    suspend fun searchRaw(
-        type: Long?,
-        minPrice: Double?,
-        maxPrice: Double?,
-        minSurface: Double?,
-        maxSurface: Double?,
-        minNbRooms: Int?,
-        maxNbRooms: Int?,
-        isAvailable: Boolean?,
-        commodities: List<Long>?
-    ): List<PropertyListItemFlatten> {
-        var query = """
-        SELECT
-            p.id,
-            p.name,
-            p.description,
-            p.surface,
-            p.nb_rooms AS nbRooms,
-            p.price,
-            p.is_sold AS isSold,
-            p.creation_date AS creationDate,
-            p.entry_date AS entryDate,
-            p.sale_date AS saleDate,
-            et.name AS type,
-            l.street,
-            l.postal_code AS postalCode,
-            l.city,
-            l.country,
-            l.longitude,
-            l.latitude,
-            a.first_name || ' ' || a.last_name AS agentName,
-            COALESCE(GROUP_CONCAT(c.name,','),'') AS commoditiesName,
-            pi.content AS picture
-        FROM property p
-        LEFT OUTER JOIN estate_type et ON et.id = p.type_id
-        LEFT OUTER JOIN location l ON l.id = p.location_id
-        LEFT OUTER JOIN agent a ON a.id = p.agent_id
-        LEFT OUTER JOIN property_commodity pc ON pc.property_id = p.id
-        LEFT OUTER JOIN commodity c ON c.id = pc.commodity_id
-        LEFT OUTER JOIN picture pi ON pi.property_id = p.id AND pi.`order` = 0
-    """.trimIndent()
-
-        val selectionArgs = mutableListOf<Any?>()
-        val selectionConditions = mutableListOf<String>()
-
-        // Ajout des conditions selon les paramètres
-        type?.let {
-            selectionConditions.add("et.id = ?")
-            selectionArgs.add(it)
-        }
-        minPrice?.let {
-            selectionConditions.add("p.price >= ?")
-            selectionArgs.add(it)
-        }
-        maxPrice?.let {
-            selectionConditions.add("p.price <= ?")
-            selectionArgs.add(it)
-        }
-        minSurface?.let {
-            selectionConditions.add("p.surface >= ?")
-            selectionArgs.add(it)
-        }
-        maxSurface?.let {
-            selectionConditions.add("p.surface <= ?")
-            selectionArgs.add(it)
-        }
-        minNbRooms?.let {
-            selectionConditions.add("p.nb_rooms >= ?")
-            selectionArgs.add(it)
-        }
-        maxNbRooms?.let {
-            selectionConditions.add("p.nb_rooms <= ?")
-            selectionArgs.add(it)
-        }
-        isAvailable?.let {
-            selectionConditions.add("p.is_sold = ?")
-            selectionArgs.add(if (it) 0 else 1)    }
-        commodities?.let {
-            if (it.isNotEmpty()) {
-                selectionConditions.add("c.id IN (${it.joinToString(",")})")
-            }
-        }
-
-        if (selectionConditions.isNotEmpty()) {
-            query += " WHERE " + selectionConditions.joinToString(" AND ")
-        }
-
-        query += " GROUP BY p.id"
-        val sqlQuery = SupportSQLiteQuery.builder(query).bindArgs(*selectionArgs.toTypedArray()).create()
-
-
-        return propertyDAO.search(sqlQuery).map { it.toModel() }
-    }*/
 
 }

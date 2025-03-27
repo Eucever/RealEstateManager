@@ -290,8 +290,4 @@ class AllPropertiesViewModel @Inject constructor(
         val formattedInstant = dateFormater.format(instant, pattern)
         return formattedInstant
     }
-
-    fun goToCurrentPos() {
-
-    }
 }
